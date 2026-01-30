@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://1ww35lacst7c"]
+
+[ext_resource type="PackedScene" uid="uid://c8khakrgnrbsg" path="res://scenes/audio_analyzer.tscn" id="1_uwrxv"]
+[ext_resource type="AudioStream" uid="uid://btha2tgjo8lrc" path="res://Brain Dance.mp3" id="2_yqjtg"]
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_yqjtg"]
+
+[node name="Game" type="Control" unique_id=1519304417]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="." unique_id=1135622218]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=571820614]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InputAudioAnalyzer" parent="Control/HBoxContainer" unique_id=1054632808 instance=ExtResource("1_uwrxv")]
+layout_mode = 2
+stream = SubResource("AudioStreamMicrophone_yqjtg")
+bus_name = &"Input"
+columns = 10
+
+[node name="ExpectedAudioAnalyzer2" parent="Control/HBoxContainer" unique_id=1557042172 instance=ExtResource("1_uwrxv")]
+layout_mode = 2
+stream = ExtResource("2_yqjtg")
+bus_name = &"Expected"

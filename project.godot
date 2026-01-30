@@ -11,8 +11,14 @@ config_version=5
 [application]
 
 config/name="Fit In"
+run/main_scene="uid://1ww35lacst7c"
 config/features=PackedStringArray("4.6")
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="uid://c8ihft03rxg4a"
+driver/enable_input=true
 
 [rendering]
 

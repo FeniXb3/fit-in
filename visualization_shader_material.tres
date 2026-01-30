@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dook0uu3dndvs"]
+
+[ext_resource type="Shader" uid="uid://bx2aldrersc3u" path="res://shaders/audio_analyzer.gdshader" id="1_lbhqi"]
+
+[resource]
+shader = ExtResource("1_lbhqi")
+shader_parameter/columns_count = 0
+shader_parameter/freq_data = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
