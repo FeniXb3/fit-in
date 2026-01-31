@@ -1,19 +1,22 @@
 [gd_scene format=3 uid="uid://1ww35lacst7c"]
 
+[ext_resource type="Script" uid="uid://b0a30mx7y84sj" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://c8khakrgnrbsg" path="res://scenes/audio_analyzer.tscn" id="1_uwrxv"]
-[ext_resource type="AudioStream" uid="uid://3soou5h00k8n" path="res://record.wav" id="2_yqjtg"]
-
-[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_yqjtg"]
+[ext_resource type="AudioStream" uid="uid://3soou5h00k8n" path="res://record.wav" id="4_lbhrr"]
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_lnu2h"]
 
-[node name="Game" type="Control" unique_id=1519304417]
+[node name="Game" type="Control" unique_id=1519304417 node_paths=PackedStringArray("input_audio_analyzer", "expected_audio_analyzer", "correctness_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_lnu2h")
+input_audio_analyzer = NodePath("Control/VBoxContainer/HBoxContainer/InputAudioAnalyzer")
+expected_audio_analyzer = NodePath("Control/VBoxContainer/HBoxContainer/ExpectedAudioAnalyzer")
+correctness_label = NodePath("Control/VBoxContainer/CorrectnessLabel")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=310225835]
 layout_mode = 1
@@ -34,47 +37,35 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=571820614]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=1418193366]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=571820614]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="InputAudioAnalyzer" parent="Control/HBoxContainer" unique_id=1054632808 instance=ExtResource("1_uwrxv")]
+[node name="InputAudioAnalyzer" parent="Control/VBoxContainer/HBoxContainer" unique_id=1557042172 instance=ExtResource("1_uwrxv")]
 layout_mode = 2
+color_bottom = Color(0.44638944, 0.5993103, 0, 1)
+color_top = Color(0.6727395, 0.30829853, 1, 1)
 outline_only = true
-inactive_mask = 0.618
-stream = SubResource("AudioStreamMicrophone_yqjtg")
-bus_name = &"Input"
-columns = 32
-
-[node name="ExpectedAudioAnalyzer2" parent="Control/HBoxContainer" unique_id=1557042172 instance=ExtResource("1_uwrxv")]
-layout_mode = 2
-inactive_mask = 0.51
-stream = ExtResource("2_yqjtg")
-bus_name = &"Expected"
-columns = 32
-
-[node name="ExpectedAudioAnalyzer2" parent="Control" unique_id=1951636221 instance=ExtResource("1_uwrxv")]
-visible = false
-layout_mode = 1
-color_top = Color(0.1884206, 0.5133244, 0.99999994, 1)
-inactive_mask = 0.44
-stream = ExtResource("2_yqjtg")
-bus_name = &"Expected"
-columns = 32
-
-[node name="InputAudioAnalyzer" parent="Control" unique_id=902026976 instance=ExtResource("1_uwrxv")]
-visible = false
-layout_mode = 1
-color_bottom = Color(1, 0, 1, 1)
-color_top = Color(0.6828893, 0.63758785, 7.70092e-07, 1)
-outline_only = true
-inactive_mask = 0.0
 stream = SubResource("AudioStreamMicrophone_lnu2h")
 bus_name = &"Input"
-columns = 32
+columns = 16
+
+[node name="ExpectedAudioAnalyzer" parent="Control/VBoxContainer/HBoxContainer" unique_id=863983951 instance=ExtResource("1_uwrxv")]
+layout_mode = 2
+inactive_mask = 0.51
+stream = ExtResource("4_lbhrr")
+bus_name = &"Expected"
+columns = 16
+
+[node name="CorrectnessLabel" type="Label" parent="Control/VBoxContainer" unique_id=753216597]
+layout_mode = 2
+text = "50%"

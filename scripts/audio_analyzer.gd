@@ -1,4 +1,8 @@
 extends Control
+class_name AudioAnalyzer
+
+signal frame_analyzed(analyzer_name: StringName, frame_number: int, fft: Array[float])
+signal stream_finished
 
 @onready var stream_player: AudioStreamPlayer = %StreamPlayer
 @onready var visualization: ColorRect = %Visualization
@@ -79,7 +83,7 @@ func _process(_delta: float) -> void:
 			max_values[i] = lerp(max_values[i], data[i], ANIMATION_SPEED)
 		if data[i] <= 0.0:
 			min_values[i] = lerp(min_values[i], 0.0, ANIMATION_SPEED)
-	var fft = []
+	var fft: Array[float] = []
 	for i in range(columns):
 		fft.append(lerp(min_values[i], max_values[i], ANIMATION_SPEED))
 		
@@ -92,6 +96,8 @@ func _process(_delta: float) -> void:
 	
 	frame_number += 1
 	
+	frame_analyzed.emit(name, frame_number, fft)
+	
 func _resize_values(count: int):
 	min_values.resize(count)
 	max_values.resize(count)
@@ -100,4 +106,13 @@ func _resize_values(count: int):
 
 
 func _on_stream_player_finished() -> void:
+	#stream_player.play()
+	stream_finished.emit()
+	
+func play() -> void:
 	stream_player.play()
+
+func reset() -> void:
+	frame_number = 0
+	if stream is not AudioStreamMicrophone:
+		play()
