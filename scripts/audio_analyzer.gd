@@ -2,6 +2,14 @@ extends Control
 
 @onready var stream_player: AudioStreamPlayer = %StreamPlayer
 @onready var visualization: ColorRect = %Visualization
+@export_range(0, 1) var alpha: float = 1:
+	set(value):
+		alpha = value
+		modulate.a = value
+@export var color_bottom: Color = Color.GREEN
+@export var color_top: Color = Color.RED
+@export var outline_only: bool
+@export_range(0.0, 0.7) var inactive_mask: float = 0.2
 
 @export var base_visualization_material: ShaderMaterial
 @export var stream: AudioStream
@@ -22,6 +30,7 @@ var visualization_material: ShaderMaterial
 
 var min_values := []
 var max_values := []
+var frame_number := 0
 
 
 const FREQ_MAX = 11050.0
@@ -50,7 +59,7 @@ func _ready() -> void:
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var prev_frequence = 0
 	var data = []
 	for i in range(1, columns + 1):
@@ -75,9 +84,20 @@ func _process(delta: float) -> void:
 		fft.append(lerp(min_values[i], max_values[i], ANIMATION_SPEED))
 		
 	visualization_material.set_shader_parameter("freq_data", fft)
+	visualization_material.set_shader_parameter("alpha", modulate.a)
+	visualization_material.set_shader_parameter("color_top", color_top)
+	visualization_material.set_shader_parameter("color_bottom", color_bottom)
+	visualization_material.set_shader_parameter("outline_only", outline_only)
+	visualization_material.set_shader_parameter("inactive_mask", inactive_mask)
+	
+	frame_number += 1
 	
 func _resize_values(count: int):
 	min_values.resize(count)
 	max_values.resize(count)
 	min_values.fill(0.0)
 	max_values.fill(0.0)
+
+
+func _on_stream_player_finished() -> void:
+	stream_player.play()
