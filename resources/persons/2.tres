@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PersonData" format=3 uid="uid://cirkhkxpamjxa"]
+
+[ext_resource type="Script" uid="uid://bcomx70qk8g4t" path="res://scripts/resources/person_data.gd" id="1_r1dtq"]
+[ext_resource type="AudioStream" uid="uid://co4b0wwmgt2fx" path="res://audio/laugths/ha.wav" id="2_i5aa5"]
+
+[resource]
+script = ExtResource("1_r1dtq")
+stream = ExtResource("2_i5aa5")
+columns = 1
+metadata/_custom_type_script = "uid://bcomx70qk8g4t"

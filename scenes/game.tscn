@@ -2,7 +2,14 @@
 
 [ext_resource type="Script" uid="uid://b0a30mx7y84sj" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://c8khakrgnrbsg" path="res://scenes/audio_analyzer.tscn" id="1_uwrxv"]
-[ext_resource type="AudioStream" uid="uid://br370y2a0a4sh" path="res://low-short.wav" id="3_lnu2h"]
+[ext_resource type="Script" uid="uid://bcomx70qk8g4t" path="res://scripts/resources/person_data.gd" id="2_iywne"]
+[ext_resource type="Resource" uid="uid://fgl5cccl808u" path="res://resources/settings_data.tres" id="2_p57ef"]
+[ext_resource type="AudioStream" uid="uid://br370y2a0a4sh" path="res://audio/laugths/low-short.wav" id="3_lnu2h"]
+[ext_resource type="Resource" uid="uid://cfixuyds5vft5" path="res://resources/persons/1.tres" id="3_p57ef"]
+[ext_resource type="Resource" uid="uid://cirkhkxpamjxa" path="res://resources/persons/2.tres" id="5_u5sy4"]
+[ext_resource type="Resource" uid="uid://6qgqnu24lwkg" path="res://resources/persons/3.tres" id="6_vtaks"]
+[ext_resource type="Resource" uid="uid://s8xlabpujcbc" path="res://resources/persons/4.tres" id="7_kvpfn"]
+[ext_resource type="Resource" uid="uid://3vxa2wa25nd4" path="res://resources/persons/5.tres" id="8_dinhu"]
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_lnu2h"]
 
@@ -14,7 +21,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lnu2h")
-columns = 32
+settings = ExtResource("2_p57ef")
+people = Array[ExtResource("2_iywne")]([ExtResource("3_p57ef"), ExtResource("5_u5sy4"), ExtResource("6_vtaks"), ExtResource("7_kvpfn"), ExtResource("8_dinhu")])
 input_audio_analyzer = NodePath("Control/VBoxContainer/HBoxContainer/InputAudioAnalyzer")
 expected_audio_analyzer = NodePath("Control/VBoxContainer/HBoxContainer/ExpectedAudioAnalyzer")
 correctness_label = NodePath("Control/VBoxContainer/CorrectnessLabel")

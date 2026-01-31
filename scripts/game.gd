@@ -1,6 +1,8 @@
 extends Control
 
-@export var columns: int = 1
+@export var settings: SettingsData
+@export var people: Array[PersonData]
+@export var current_person_index: int = 0
 @export var input_audio_analyzer: AudioAnalyzer
 @export var expected_audio_analyzer: AudioAnalyzer
 @export var correctness_label: Label
@@ -20,9 +22,24 @@ func _ready() -> void:
 	input_audio_analyzer.frame_analyzed.connect(_on_frame_analyzed)
 	expected_audio_analyzer.frame_analyzed.connect(_on_frame_analyzed)
 	expected_audio_analyzer.stream_finished.connect(_on_stream_finished)
-	input_audio_analyzer.columns = columns
-	expected_audio_analyzer.columns = columns
-	pass
+	
+	set_current_person()
+	
+func set_current_person():
+	print("Setting up person %d" % current_person_index)
+	var current_person := people[current_person_index]
+	expected_audio_analyzer.stop()
+	expected_audio_analyzer.stream = current_person.stream
+	epsilon = current_person.epsilon
+	
+	_set_analyzer_options(input_audio_analyzer, current_person)
+	_set_analyzer_options(expected_audio_analyzer, current_person)
+	
+	expected_audio_analyzer.play.call_deferred()
+	
+func _set_analyzer_options(analyzer: AudioAnalyzer, person: PersonData):
+	analyzer.columns = person.columns
+	analyzer.FREQ_MAX = person.max_frequency
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -54,7 +71,7 @@ func update_frame_correctness(frame_number: int):
 		var current_diff = absf(buff_1[i] - buff_2[i])
 		diff.append(current_diff)
 		total_frequencies +=1
-		if current_diff <= epsilon:
+		if current_diff <= epsilon * settings.epsilon_multiplier:
 			correct_frequencies += 1
 	
 	if total_frequencies > 0:
@@ -74,10 +91,6 @@ func _on_frame_analyzed(analyzer_name: StringName, frame_number: int, fft: Array
 		update_frame_correctness.call_deferred(frame_number)
 
 func _on_stream_finished() -> void:
-	#await get_tree().create_timer(1).timeout
-	input_audio_analyzer.reset.call_deferred()
-	expected_audio_analyzer.reset.call_deferred()
-	
 	var avg_similarity: float = 0
 	if similarities.size() > 0:
 		avg_similarity = similarities.reduce(sum, 0) / similarities.size()
@@ -89,6 +102,30 @@ func _on_stream_finished() -> void:
 	#for key in frame_data:
 		#for another_key in frame_data[key]:
 			#frame_data[key][another_key].fill(0.0)
+			
+	if avg_similarity >= settings.similarity_threshold:
+		input_audio_analyzer.stop()
+		expected_audio_analyzer.stop()
+		await get_tree().create_timer(1).timeout
+		
+		for key in frame_data:
+			for another_key in frame_data[key]:
+				frame_data[key][another_key].fill(0.0)
+		_pass_person()
+	else:
+		input_audio_analyzer.reset.call_deferred()
+		expected_audio_analyzer.reset.call_deferred()
 
+func _pass_person():
+	current_person_index += 1
+	if current_person_index >= people.size():
+		end_game()
+	else:
+		set_current_person() 
+
+func end_game():
+	expected_audio_analyzer.stop()
+	print("Congratulations!")
+	
 func sum(accum, number):
 	return accum + number

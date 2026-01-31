@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PersonData" format=3 uid="uid://cfixuyds5vft5"]
+
+[ext_resource type="Script" uid="uid://bcomx70qk8g4t" path="res://scripts/resources/person_data.gd" id="1_eutgq"]
+[ext_resource type="AudioStream" uid="uid://br370y2a0a4sh" path="res://audio/laugths/low-short.wav" id="2_eutgq"]
+
+[resource]
+script = ExtResource("1_eutgq")
+stream = ExtResource("2_eutgq")
+metadata/_custom_type_script = "uid://bcomx70qk8g4t"

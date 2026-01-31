@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SettingsData" format=3 uid="uid://fgl5cccl808u"]
+
+[ext_resource type="Script" uid="uid://bixe5yhfqm7nw" path="res://scripts/resources/settings_data.gd" id="1_mlqj7"]
+[ext_resource type="AudioBusLayout" uid="uid://c8ihft03rxg4a" path="res://default_bus_layout.tres" id="1_oui3e"]
+
+[resource]
+script = ExtResource("1_mlqj7")
+audio_bus_Layout = ExtResource("1_oui3e")
+metadata/_custom_type_script = "uid://bixe5yhfqm7nw"

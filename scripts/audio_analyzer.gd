@@ -16,7 +16,11 @@ signal stream_finished
 @export_range(0.0, 0.7) var inactive_mask: float = 0.2
 
 @export var base_visualization_material: ShaderMaterial
-@export var stream: AudioStream
+@export var stream: AudioStream:
+	set(value):
+		stream = value
+		if stream_player:
+			stream_player.stream = stream
 @export var bus_name: StringName
 @export var columns: int = 128:
 	set(value):
@@ -64,6 +68,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if not stream_player.playing:
+		return
+		
 	var prev_frequence = 0
 	var data = []
 	for i in range(1, columns + 1):
@@ -106,11 +113,15 @@ func _resize_values(count: int):
 
 
 func _on_stream_player_finished() -> void:
-	#stream_player.play()
 	stream_finished.emit()
 	
 func play() -> void:
 	stream_player.play()
+	
+func stop() -> void:
+	frame_number = 0
+	if stream is not AudioStreamMicrophone:
+		stream_player.stop()
 
 func reset() -> void:
 	frame_number = 0

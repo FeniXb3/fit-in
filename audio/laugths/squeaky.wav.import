@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://br370y2a0a4sh"
-path="res://.godot/imported/low-short.wav-597ecbfbbc6812a13e7665b779b9e429.sample"
+uid="uid://c2oclcsjhyvub"
+path="res://.godot/imported/squeaky.wav-17951cdeaf739d57dbc8d4e635274470.sample"
 
 [deps]
 
-source_file="res://low-short.wav"
-dest_files=["res://.godot/imported/low-short.wav-597ecbfbbc6812a13e7665b779b9e429.sample"]
+source_file="res://audio/laugths/squeaky.wav"
+dest_files=["res://.godot/imported/squeaky.wav-17951cdeaf739d57dbc8d4e635274470.sample"]
 
 [params]
 
