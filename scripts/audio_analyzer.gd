@@ -37,7 +37,7 @@ var max_values := []
 var frame_number := 0
 
 
-const FREQ_MAX = 11050.0
+@export var FREQ_MAX = 11050.0
 const MIN_DB = 60
 const ANIMATION_SPEED = 0.1
 const HEIGHT_SCALE = 8.0

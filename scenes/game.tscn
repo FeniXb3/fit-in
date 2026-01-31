@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://b0a30mx7y84sj" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://c8khakrgnrbsg" path="res://scenes/audio_analyzer.tscn" id="1_uwrxv"]
-[ext_resource type="AudioStream" uid="uid://3soou5h00k8n" path="res://record.wav" id="4_lbhrr"]
+[ext_resource type="AudioStream" uid="uid://br370y2a0a4sh" path="res://low-short.wav" id="3_lnu2h"]
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_lnu2h"]
 
-[node name="Game" type="Control" unique_id=1519304417 node_paths=PackedStringArray("input_audio_analyzer", "expected_audio_analyzer", "correctness_label")]
+[node name="Game" type="Control" unique_id=1519304417 node_paths=PackedStringArray("input_audio_analyzer", "expected_audio_analyzer", "correctness_label", "avarage_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,9 +14,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lnu2h")
+columns = 32
 input_audio_analyzer = NodePath("Control/VBoxContainer/HBoxContainer/InputAudioAnalyzer")
 expected_audio_analyzer = NodePath("Control/VBoxContainer/HBoxContainer/ExpectedAudioAnalyzer")
 correctness_label = NodePath("Control/VBoxContainer/CorrectnessLabel")
+avarage_label = NodePath("Control/VBoxContainer/AvarageLabel")
+epsilon = 0.1
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=310225835]
 layout_mode = 1
@@ -57,15 +60,17 @@ color_top = Color(0.6727395, 0.30829853, 1, 1)
 outline_only = true
 stream = SubResource("AudioStreamMicrophone_lnu2h")
 bus_name = &"Input"
-columns = 16
+columns = 32
 
 [node name="ExpectedAudioAnalyzer" parent="Control/VBoxContainer/HBoxContainer" unique_id=863983951 instance=ExtResource("1_uwrxv")]
 layout_mode = 2
 inactive_mask = 0.51
-stream = ExtResource("4_lbhrr")
+stream = ExtResource("3_lnu2h")
 bus_name = &"Expected"
-columns = 16
+columns = 32
 
 [node name="CorrectnessLabel" type="Label" parent="Control/VBoxContainer" unique_id=753216597]
 layout_mode = 2
-text = "50%"
+
+[node name="AvarageLabel" type="Label" parent="Control/VBoxContainer" unique_id=1901652141]
+layout_mode = 2
